@@ -1,0 +1,4 @@
+Flask==1.0.2
+splitio_client[redis,cpphash]==8.1.6
+uwsgi
+six
