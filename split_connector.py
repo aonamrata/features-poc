@@ -1,33 +1,28 @@
 """Connector for Split.io SDK"""
 import os
-
+import logging
 import splitio
+import uwsgi  # noqa
+from uwsgidecorators import postfork  # Step 1
+logging.basicConfig(level=logging.DEBUG)
 
-# split.io
+
 SPLITIO_API_KEY = os.environ.get('SPLITIO_API_KEY')
-SPLIT_CONFIG = {
-    'ready': 5000,
-}
-SPLIT_BLOCK_UNTIL_READY_TIMEOUT = 10
+
+factory = splitio.get_factory(
+    SPLITIO_API_KEY,
+    config={
+        'preforkedInitialization': True,  # Step 2
+        'ready': 5000,
+    },
+)
 
 
-
-def get_split_factory():
-    """Python SDK factory is initialized.
-
-    Returns:
-        split_client : split_client object, used to fetch variants
-        split_manager: split_manager object, used to fetch
-        split(feature details)
-    """
-    # @todo remove try/except block once split.io is ready
-    # for production usage
-    factory = splitio.get_factory(
-        SPLITIO_API_KEY, config=SPLIT_CONFIG)
-    factory.block_until_ready(SPLIT_BLOCK_UNTIL_READY_TIMEOUT)
-    split_client = factory.client()
-
-    return split_client
+@postfork # Step 3
+def post_fork_execution():
+    factory.resume()  # Step 4
+    factory.block_until_ready(10)
 
 
-split_client = get_split_factory()
+def get_split_client():
+    return factory.client()

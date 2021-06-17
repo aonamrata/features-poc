@@ -11,18 +11,8 @@
 
 ```
 cd /var/www/html_npatel/features-poc
-source .env
-sh sh uwsgi-start.sh
-
-```
-
-
-## Shell 3: K6 load tester
-
-```
-cd /var/www/html_npatel/features-poc
-source .env
-sh k6-test-runner.sh
+docker build  -t features1 .
+docker run -p 8080:8080 features1
 
 ```
 

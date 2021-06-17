@@ -11,5 +11,12 @@ def hello():
 def get_single_feature(feature_name):
     traffic_type = 'user'
     split_name = feature_name
-    attributes = {}  # {'user_id': 'alw:123'}  # for testing
+    attributes = {}
+    return split_model.get_split_feature(traffic_type, split_name, attributes)
+
+@app.route("/feature/<feature_name>/user/<user_id>")
+def get_single_feature(feature_name, user_id):
+    traffic_type = 'user'
+    split_name = feature_name
+    attributes = {'user_id': user_id}
     return split_model.get_split_feature(traffic_type, split_name, attributes)
