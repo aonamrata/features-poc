@@ -27,8 +27,13 @@ ADD        . /var/app
 RUN        if [ -f /var/app/requirements.txt ]; then /var/app/bin/pip install -I -r /var/app/requirements.txt --use-deprecated=legacy-resolver; fi
 
 # Add startup script
-ADD        uwsgi-start-multi-thread-uwsgi.sh /
-RUN        chmod +x /uwsgi-start-multi-thread-uwsgi.sh
-ENTRYPOINT ["/uwsgi-start-multi-thread-uwsgi.sh"]
+# ADD        uwsgi-start-multi-thread-uwsgi.sh /
+# RUN        chmod +x /uwsgi-start-multi-thread-uwsgi.sh
+# ENTRYPOINT ["/uwsgi-start-multi-thread-uwsgi.sh"]
+
+ADD        uwsgi-start-multi-process-uwsgi.sh /
+RUN        chmod +x /uwsgi-start-multi-process-uwsgi.sh
+ENTRYPOINT ["/uwsgi-start-multi-process-uwsgi.sh"]
+
 
 EXPOSE     8080
