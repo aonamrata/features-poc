@@ -28,5 +28,7 @@ fi
 
 uwsgi --http :8080 --chdir /var/app --wsgi-file ${WSGI_PATH} ${UWSGI_MODULE} --master \
 --processes ${UWSGI_NUM_PROCESSES} --threads ${UWSGI_NUM_THREADS} --uid ${UWSGI_UID} --gid ${UWSGI_GID} -t ${UWSGI_TIMEOUT} \
---http-keepalive --add-header ${UWSGI_HEADERS} --buffer-size ${UWSGI_BUFFER_SIZE} --lazy-apps
+--http-keepalive --add-header ${UWSGI_HEADERS} --buffer-size ${UWSGI_BUFFER_SIZE} \
+--enable-threads 
 
+# --lazy-apps

@@ -26,7 +26,7 @@ fi
 # defaulting to application.py if not explicitly set
 [ -z "${WSGI_PATH}" ] && WSGI_PATH=application.py
 
-uwsgi --http :8080 --chdir /var/app --wsgi-file ${WSGI_PATH} ${UWSGI_MODULE} --master \
---processes ${UWSGI_NUM_PROCESSES} --uid ${UWSGI_UID} --gid ${UWSGI_GID} -t ${UWSGI_TIMEOUT} \
---http-keepalive --add-header ${UWSGI_HEADERS} --buffer-size ${UWSGI_BUFFER_SIZE}
-
+ uwsgi --http :8080 --chdir /var/app --wsgi-file ${WSGI_PATH} ${UWSGI_MODULE} --master \
+ --processes ${UWSGI_NUM_PROCESSES} --uid ${UWSGI_UID} --gid ${UWSGI_GID} -t ${UWSGI_TIMEOUT} \
+ --http-keepalive --add-header ${UWSGI_HEADERS} --buffer-size ${UWSGI_BUFFER_SIZE} \
+ --enable-threads

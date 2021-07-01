@@ -1,4 +1,4 @@
 Flask==1.0.2
-splitio_client[uwsgi,cpphash]==8.4.1
+splitio_client[uwsgi, cpphash]==9.0.0
 uwsgi
 six
